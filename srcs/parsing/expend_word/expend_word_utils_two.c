@@ -1,0 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expend_word_utils_two.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/03 18:56:16 by laclide           #+#    #+#             */
+/*   Updated: 2024/12/30 18:53:13 by aafounas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	file_error_message(t_commande_line *cur_b)
+{
+	write(2, "minishell: erreur de syntaxe",
+		ft_strlen("minishell: erreur de syntaxe"));
+	if (cur_b)
+		write(2, " |\n", 3);
+	else
+		write(2, " newline\n", 9);
+	return (12);
+}
+
+t_token_type	change_type_file(t_token_type type, int *file)
+{
+	*file = 0;
+	if (type == TOKEN_OPEN_FILE)
+		return (TOKEN_FILE_IN);
+	else if (type == TOKEN_CREAT_FILE)
+		return (TOKEN_FILE_OUT);
+	else if (type == TOKEN_WRITE_FILE)
+		return (TOKEN_FILE_OUT_APPEND);
+	else if (type == TOKEN_HERE_DOC)
+		return (TOKEN_LIMITOR);
+	return (TOKEN_NONE);
+}
