@@ -6,22 +6,22 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 21:52:54 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:39:46 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_exit_code;
 
-int	has_equal(char *str)
+int	has_equal(char *s)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (s[i])
 	{
-		if (str[i] == '=')
+		if (s[i] == '=')
 			return (1);
 		i++;
 	}
@@ -30,32 +30,32 @@ int	has_equal(char *str)
 
 char	*ft_get_home(void)
 {
-	t_environnement	*cpy;
 	int		len;
+	t_environnement	*copy;
 
 	len = key_len("HOME=");
-	cpy = *access_env();
-	while (cpy)
+	copy = *access_env();
+	while (copy)
 	{
-		if (len == key_len(cpy->str)
-			&& !ft_strncmp(cpy->str, "HOME", len))
+		if (len == key_len(copy->str)
+			&& !ft_strncmp(copy->str, "HOME", len))
 		{
-			if (has_equal(cpy->str))
-				return (cpy->str + len + 1);
+			if (has_equal(copy->str))
+				return (copy->str + len + 1);
 			return (NULL);
 		}
-		cpy = cpy->next;
+		copy = copy->next;
 	}
 	return (NULL);
 }
 
 int	ft_pwd(char *s)
 {
-	char	*oldpwd;
 	char	*pwd;
-	int		ret;
+	int		status_code;
+	char	*oldpwd;
 
-	ret = 0;
+	status_code = 0;
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
 	{
@@ -69,9 +69,9 @@ int	ft_pwd(char *s)
 		free(oldpwd);
 		return (50);
 	}
-	ret = env_add(oldpwd);
+	status_code = env_add(oldpwd);
 	free(oldpwd);
-	return (ret);
+	return (status_code);
 }
 
 int	ft_cd(char **str)

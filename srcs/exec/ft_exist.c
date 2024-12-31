@@ -6,90 +6,90 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 12:41:26 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:04:31 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:45:46 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_exit_code;
 
-char	*write_bad_cmd_free_split(char *str, char **split_path)
+char	*write_bad_cmd_free_split(char *s, char **path_parts)
 {
-	free_and_cleanup_split(split_path);
+	free_and_cleanup_split(path_parts);
 	write(2, "minishell: ", 11);
-	write(2, str, ft_strlen(str));
+	write(2, s, ft_strlen(s));
 	write(2, " : commande introuvable\n",
 		ft_strlen(" : commande introuvable\n"));
 	return (NULL);
 }
 
-char	*write_bad_cmd_free(char *str)
+char	*write_bad_cmd_free(char *s)
 {
 	write(2, "minishell: ", 11);
-	write(2, str, ft_strlen(str));
+	write(2, s, ft_strlen(s));
 	write(2, " : commande introuvable\n",
 		ft_strlen(" : commande introuvable\n"));
-	free(str);
+	free(s);
 	return (NULL);
 }
 
-char	*build_path(char *str, char *path)
+char	*build_path(char *s, char *path)
 {
 	char	*back_slash;
-	char	*new;
+	char	*full_path;
 
 	back_slash = ft_strjoin(path, "/");
 	if (back_slash == NULL)
 		return (NULL);
-	new = ft_strjoin(back_slash, str);
+	full_path = ft_strjoin(back_slash, s);
 	free(back_slash);
-	if (new == NULL)
+	if (full_path == NULL)
 		return (NULL);
-	return (new);
+	return (full_path);
 }
 
-int	can_access(char *str, char *path)
+int	can_access(char *s, char *path)
 {
-	char	*try;
+	char	*full_path;
 
-	try = build_path(str, path);
-	if (try == NULL)
+	full_path = build_path(s, path);
+	if (full_path == NULL)
 		return (50);
-	if (access(try, X_OK) == 0)
+	if (access(full_path, X_OK) == 0)
 	{
-		free(try);
+		free(full_path);
 		return (1);
 	}
-	free(try);
+	free(full_path);
 	return (0);
 }
 
-char	*get_executable_path(char *str, char *path, int i)
+char	*get_executable_path(char *s, char *path, int i)
 {
-	int		ret;
-	char	**split_path;
-	char	*try;
+	int		status_code;
+	char	**path_parts;
+	char	*full_path;
 
-	if (str && (str[0] == '.' || str[0] == '/'))
-		return (str);
-	split_path = ft_strsplit(path, ':');
-	if (split_path == NULL)
-		return (write_bad_cmd_free(str));
-	while (split_path[i] && str[0] != '\0')
+	if (s && (s[0] == '.' || s[0] == '/'))
+		return (s);
+	path_parts = ft_strsplit(path, ':');
+	if (path_parts == NULL)
+		return (write_bad_cmd_free(s));
+	while (path_parts[i] && s[0] != '\0')
 	{
-		ret = can_access(str, split_path[i]);
-		if (ret == 1)
+		status_code = can_access(s, path_parts[i]);
+		if (status_code == 1)
 		{
-			try = build_path(str, split_path[i]);
-			free_and_cleanup_split(split_path);
-			return (try);
+			full_path = build_path(s, path_parts[i]);
+			free_and_cleanup_split(path_parts);
+			return (full_path);
 		}
-		if (ret == 50)
-			return (cleanup_split(split_path));
+		if (status_code == 50)
+			return (cleanup_split(path_parts));
 		i++;
 	}
-	write_bad_cmd_free_split(str, split_path);
-	g_exit_status = 127;
-	return (str);
+	write_bad_cmd_free_split(s, path_parts);
+	g_exit_code = 127;
+	return (s);
 }

@@ -6,56 +6,56 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:19:46 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:56:06 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*process_str(char *str)
+char	*process_str(char *s)
 {
 	t_environnement	**env_list;
 
 	env_list = access_env();
-	return (lookup_env_str(env_list, str));
+	return (lookup_env_str(env_list, s));
 }
 
-char	*lookup_env_str(t_environnement **env, char *str)
+char	*lookup_env_str(t_environnement **env, char *s)
 {
-	t_environnement	*cpy;
 	int		len;
+	t_environnement	*copy;
 
-	len = key_len(str);
-	cpy = *env;
-	while (cpy)
+	len = key_len(s);
+	copy = *env;
+	while (copy)
 	{
-		if (len == key_len(cpy->str) && !ft_strncmp(cpy->str, str, len))
-			return (cpy->str);
-		cpy = cpy->next;
+		if (len == key_len(copy->str) && !ft_strncmp(copy->str, s, len))
+			return (copy->str);
+		copy = copy->next;
 	}
 	return (NULL);
 }
 
-char	*lookup_env(char *str)
+char	*lookup_env(char *s)
 {
 	t_environnement	**env_list;
 
 	env_list = access_env();
-	return (access_env_value(env_list, str));
+	return (access_env_value(env_list, s));
 }
 
-char	*access_env_value(t_environnement **env, char *str)
+char	*access_env_value(t_environnement **env, char *s)
 {
-	t_environnement	*cpy;
 	int		len;
+	t_environnement	*copy;
 
-	len = key_len(str);
-	cpy = *env;
-	while (cpy)
+	len = key_len(s);
+	copy = *env;
+	while (copy)
 	{
-		if (len == key_len(cpy->str) && !ft_strncmp(cpy->str, str, len))
-			return (cpy->str + len + 1);
-		cpy = cpy->next;
+		if (len == key_len(copy->str) && !ft_strncmp(copy->str, s, len))
+			return (copy->str + len + 1);
+		copy = copy->next;
 	}
 	return (NULL);
 }

@@ -6,13 +6,13 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 08:58:02 by laclide           #+#    #+#             */
-/*   Updated: 2024/12/30 19:10:42 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:25:30 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	g_exit_status;
+int	g_exit_code;
 
 int	pars(char *str, t_commande_line **cmd_line)
 {
@@ -45,10 +45,10 @@ int	pars(char *str, t_commande_line **cmd_line)
 
 void	handle_cmd_signal(int sig)
 {
-	g_exit_status += sig;
+	g_exit_code += sig;
 	if (sig == 2)
 	{
-		g_exit_status = 130;
+		g_exit_code = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -113,7 +113,7 @@ int	main(int ac, char **av, char **envp)
 	t_commande_line	*cmd_line;
 
 	cmd_line = NULL;
-	g_exit_status = 0;
+	g_exit_code = 0;
 	load_env(envp);
 	signal(SIGINT, handle_cmd_signal);
 	signal(SIGQUIT, SIG_IGN);

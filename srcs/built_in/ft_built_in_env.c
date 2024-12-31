@@ -6,31 +6,31 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 13:25:49 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:44:29 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	process_env(char **str)
+int	process_env(char **s)
 {
 	t_environnement	**env;
 
-	if (*str == NULL)
+	if (*s == NULL)
 		return (0);
 	env = access_env();
 	display_env(env);
 	return (0);
 }
 
-int	check_equal(char *str)
+int	check_equal(char *s)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (s[i] != '\0')
 	{
-		if (str[i] == '=')
+		if (s[i] == '=')
 			return (1);
 		i++;
 	}
@@ -39,15 +39,15 @@ int	check_equal(char *str)
 
 void	display_env(t_environnement **env)
 {
-	t_environnement	*cur;
+	t_environnement	*current;
 
-	cur = *env;
-	while (cur)
+	current = *env;
+	while (current)
 	{
-		if (check_equal(cur->str))
+		if (check_equal(current->str))
 		{
-			printf("%s\n", cur->str);
+			printf("%s\n", current->str);
 		}
-		cur = cur->next;
+		current = current->next;
 	}
 }

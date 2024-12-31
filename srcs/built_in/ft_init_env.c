@@ -48,8 +48,8 @@ t_environnement	**access_env(void)
 
 int	load_env(char **env)
 {
-	t_environnement	**env_list;
 	int		i;
+	t_environnement	**env_list;
 
 	env_list = access_env();
 	i = 0;

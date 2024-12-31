@@ -6,27 +6,27 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:18:11 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:25:38 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:36:36 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	env_add(char *str)
+int	env_add(char *s)
 {
-	return (handle_env_actions(str, ENV_ADD));
+	return (handle_env_actions(s, ENV_ADD));
 }
 
 char	*rm_plus(char *env)
 {
-	int		len;
 	char	*s;
-	int		i;
 	int		y;
+	int		i;
+	int		env_len;
 
 	i = 0;
 	y = 0;
-	len = key_len(env) - 1;
+	env_len = key_len(env) - 1;
 	if (env[key_len(env) - 1] != '+')
 		return (ft_strdup(env));
 	s = malloc(sizeof(char) * ft_strlen(env));
@@ -37,19 +37,19 @@ char	*rm_plus(char *env)
 		s[i] = env[y];
 		i++;
 		y++;
-		if (y == len)
+		if (y == env_len)
 			y++;
 	}
 	s[i] = '\0';
 	return (s);
 }
 
-int	ft_special_lenkey(char *str)
+int	ft_special_lenkey(char *s)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0' && str[i] != '=' && str[i] != '+')
+	while (s[i] != '\0' && s[i] != '=' && s[i] != '+')
 		i++;
 	return (i);
 }
@@ -57,27 +57,27 @@ int	ft_special_lenkey(char *str)
 int	new_env_value(t_environnement **env_list, char *env, int declare)
 {
 	int		len;
-	t_environnement	*cpy;
+	t_environnement	*copy;
 
-	cpy = *env_list;
+	copy = *env_list;
 	len = ft_special_lenkey(env);
-	while (cpy)
+	while (copy)
 	{
-		declare = cpy->declare_status;
-		if (len == key_len(cpy->str) && !ft_strncmp(env, cpy->str, len))
+		declare = copy->declare_status;
+		if (len == key_len(copy->str) && !ft_strncmp(env, copy->str, len))
 		{
-			if (has_equal(cpy->str) && !has_equal(env))
+			if (has_equal(copy->str) && !has_equal(env))
 				return (0);
-			free(cpy->str);
-			cpy->str = rm_plus(env);
-			if (cpy->str == NULL)
+			free(copy->str);
+			copy->str = rm_plus(env);
+			if (copy->str == NULL)
 			{
 				clear_envlist(access_env());
 				return (50);
 			}
 			return (0);
 		}
-		cpy = cpy->next;
+		copy = copy->next;
 	}
 	return (add_env_front(env, env_list, declare));
 }

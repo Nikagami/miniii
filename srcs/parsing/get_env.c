@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_exit_code;
 
 int	access_env_var_len(char *str)
 {
@@ -74,7 +74,7 @@ char	*get_envmtp(char *str, int *cur)
 	if (len_str == 1 && str[1] == '?')
 	{
 		*cur = *cur + 2;
-		return (ft_itoa(g_exit_status));
+		return (ft_itoa(g_exit_code));
 	}
 	cpy = malloc(sizeof(char) * (len_str + 1));
 	if (cpy == NULL)

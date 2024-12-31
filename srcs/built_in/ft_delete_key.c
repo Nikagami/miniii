@@ -6,38 +6,38 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 21:21:22 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:53:38 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	rm_env(char *str)
+int	rm_env(char *s)
 {
-	return (handle_env_actions(str, ENV_DELETE));
+	return (handle_env_actions(s, ENV_DELETE));
 }
 
 void	rm_env_call(t_environnement **env, char *key)
 {
-	t_environnement	*cpy;
-	t_environnement	*prev;
+	t_environnement	*previous;
+	t_environnement	*copy;
 	int		len;
 
 	len = key_len(key);
-	prev = NULL;
-	cpy = *env;
-	while (cpy)
+	previous = NULL;
+	copy = *env;
+	while (copy)
 	{
-		if (len == key_len(cpy->str) && !ft_strncmp(cpy->str, key, len))
+		if (len == key_len(copy->str) && !ft_strncmp(copy->str, key, len))
 		{
-			if (prev == NULL)
-				*env = cpy->next;
+			if (previous == NULL)
+				*env = copy->next;
 			else
-				prev->next = cpy->next;
-			free_env_node(cpy);
+				previous->next = copy->next;
+			free_env_node(copy);
 			return ;
 		}
-		prev = cpy;
-		cpy = cpy->next;
+		previous = copy;
+		copy = copy->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 17:30:59 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:48:04 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ int	env_len(void)
 
 char	**envlist_to_array(t_environnement **envp)
 {
-	char	**str;
+	char	**s;
 	t_environnement	*env;
 	int		i;
-	int		index;
+	int		env_index;
 
-	index = 0;
+	env_index = 0;
 	i = env_len();
 	env = *envp;
-	str = malloc(sizeof(char *) * i);
-	if (str == NULL)
+	s = malloc(sizeof(char *) * i);
+	if (s == NULL)
 		return (NULL);
-	while (env && index < i)
+	while (env && env_index < i)
 	{
-		str[index] = ft_strdup(env->str);
-		if (str[index] == NULL)
+		s[env_index] = ft_strdup(env->str);
+		if (s[env_index] == NULL)
 			return (NULL);
-		index++;
+		env_index++;
 		env = env->next;
 	}
-	return (str);
+	return (s);
 }

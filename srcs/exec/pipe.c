@@ -6,86 +6,86 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/07 18:54:15 by laclide           #+#    #+#             */
-/*   Updated: 2024/12/30 19:24:19 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:54:07 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_nfd(int **nfd)
+void	free_fd_list(int **fd_list)
 {
 	int	i;
 
 	i = 0;
-	while (nfd[i])
+	while (fd_list[i])
 	{
-		free(nfd[i]);
+		free(fd_list[i]);
 		i++;
 	}
-	free(nfd);
+	free(fd_list);
 }
 
-void	cleanup_fds(t_commande_line **cmdl)
+void	cleanup_fds(t_commande_line **c_list)
 {
-	t_commande_line	*cur;
+	t_commande_line	*current;
 
-	cur = *cmdl;
-	while (cur)
+	current = *c_list;
+	while (current)
 	{
-		if (cur->input_fd != 0)
-			close(cur->input_fd);
-		if (cur->output_fd != 1)
-			close(cur->output_fd);
-		cur = cur->next_cmd;
+		if (current->input_fd != 0)
+			close(current->input_fd);
+		if (current->output_fd != 1)
+			close(current->output_fd);
+		current = current->next_cmd;
 	}
 }
 
-int	init_pipe(int **nfd, int i, t_commande_line *cur)
+int	init_pipe(int **pipe_fds, int i, t_commande_line *current)
 {
-	nfd[i] = malloc(sizeof(int) * (2));
-	if (nfd[i] == NULL)
+	pipe_fds[i] = malloc(sizeof(int) * (2));
+	if (pipe_fds[i] == NULL)
 		return (50);
-	if (pipe(nfd[i]) == -1)
+	if (pipe(pipe_fds[i]) == -1)
 		return (40);
 	if (i == 0)
-		cur->input_fd = 0;
+		current->input_fd = 0;
 	else
-		cur->input_fd = nfd[i - 1][0];
-	if (cur->next_cmd == NULL)
+		current->input_fd = pipe_fds[i - 1][0];
+	if (current->next_cmd == NULL)
 	{
-		close(nfd[i][0]);
-		close(nfd[i][1]);
-		cur->output_fd = 1;
+		close(pipe_fds[i][0]);
+		close(pipe_fds[i][1]);
+		current->output_fd = 1;
 	}
 	else
-		cur->output_fd = nfd[i][1];
+		current->output_fd = pipe_fds[i][1];
 	return (0);
 }
 
-int	initialize_pipes(t_commande_line **cmdl)
+int	initialize_pipes(t_commande_line **c_list)
 {
-	t_commande_line	*cur;
-	int				**nfd;
 	int				i;
-	int				ret;
+	int				status_code;
+	t_commande_line	*current;
+	int				**pipe_fds;
 
 	i = 0;
-	cur = *cmdl;
-	nfd = malloc(sizeof(int *) * (count_cmds(cur) + 1));
-	if (nfd == NULL)
+	current = *c_list;
+	pipe_fds = malloc(sizeof(int *) * (count_cmds(current) + 1));
+	if (pipe_fds == NULL)
 		return (50);
-	nfd[count_cmds(cur)] = NULL;
-	while (cur)
+	pipe_fds[count_cmds(current)] = NULL;
+	while (current)
 	{
-		ret = init_pipe(nfd, i, cur);
-		if (ret != 0)
+		status_code = init_pipe(pipe_fds, i, current);
+		if (status_code != 0)
 		{
-			free_nfd(nfd);
-			return (ret);
+			free_fd_list(pipe_fds);
+			return (status_code);
 		}
-		cur = cur->next_cmd;
+		current = current->next_cmd;
 		i++;
 	}
-	free_nfd(nfd);
+	free_fd_list(pipe_fds);
 	return (0);
 }

@@ -6,60 +6,60 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:18:40 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 15:44:23 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:43:20 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_exit_code;
 
-int	flag_n(char **str)
+int	flag_n(char **s)
 {
-	int	i;
 	int	y;
-	int	cpt;
+	int	i;
+	int	count;
 
-	cpt = 0;
+	count = 0;
 	y = 0;
 	i = 0;
-	while (str[i] && ft_strlen(str[i]) >= 2)
+	while (s[i] && ft_strlen(s[i]) >= 2)
 	{
-		if (str[i][y] == '-' && str[i][y + 1] == 'n')
+		if (s[i][y] == '-' && s[i][y + 1] == 'n')
 		{
 			y++;
-			while (str[i][y] == 'n')
+			while (s[i][y] == 'n')
 				y++;
-			if (y == (int)ft_strlen(str[i]))
-				cpt++;
+			if (y == (int)ft_strlen(s[i]))
+				count++;
 		}
 		else
-			return (cpt);
+			return (count);
 		i++;
 		y = 0;
 	}
-	return (cpt);
+	return (count);
 }
 
-int	ft_echo(char **str)
+int	ft_echo(char **s)
 {
-	int	i;
 	int	y;
+	int	i;
 
-	str++;
+	s++;
 	y = 0;
-	i = flag_n(str);
+	i = flag_n(s);
 	if (i > 0)
 		y++;
-	while (str[i])
+	while (s[i])
 	{
-		printf("%s", str[i]);
-		if (str[i + 1])
+		printf("%s", s[i]);
+		if (s[i + 1])
 			printf(" ");
 		i++;
 	}
 	if (y == 0)
 		printf("\n");
-	g_exit_status = 0;
+	g_exit_code = 0;
 	return (0);
 }

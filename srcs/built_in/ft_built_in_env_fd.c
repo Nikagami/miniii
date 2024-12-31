@@ -6,17 +6,17 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 13:25:49 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:43:50 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	env_fd(char **str, int fd)
+int	env_fd(char **s, int fd)
 {
 	t_environnement	**env;
 
-	if (*str == NULL)
+	if (*s == NULL)
 		return (0);
 	env = access_env();
 	display_env_fd(env, fd);
@@ -25,16 +25,16 @@ int	env_fd(char **str, int fd)
 
 void	display_env_fd(t_environnement **env, int fd)
 {
-	t_environnement	*cur;
+	t_environnement	*current;
 
-	cur = *env;
-	while (cur)
+	current = *env;
+	while (current)
 	{
-		if (check_equal(cur->str))
+		if (check_equal(current->str))
 		{
-			ft_putstr_fd(cur->str, fd);
+			ft_putstr_fd(current->str, fd);
 			ft_putchar_fd('\n', fd);
 		}
-		cur = cur->next;
+		current = current->next;
 	}
 }

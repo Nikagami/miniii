@@ -6,13 +6,13 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 23:24:45 by viporten          #+#    #+#             */
-/*   Updated: 2024/12/30 19:24:19 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:25:30 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_exit_code;
 
 void	free_cmd_tokens(t_commande_line **cmd_line)
 {
@@ -56,5 +56,5 @@ void	syntax_error_message(void)
 {
 	write(2, "minishell: syntax error near unexpected token '|' \n",
 		ft_strlen("minishell: syntax error near unexpected token '|' \n"));
-	g_exit_status = 2;
+	g_exit_code = 2;
 }

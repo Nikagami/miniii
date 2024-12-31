@@ -6,7 +6,7 @@
 /*   By: aafounas <aafounas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:59:18 by lchristo          #+#    #+#             */
-/*   Updated: 2024/12/30 19:22:11 by aafounas         ###   ########.fr       */
+/*   Updated: 2024/12/31 17:54:03 by aafounas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	free_env(void)
 
 void	clear_envlist(t_environnement **env)
 {
-	t_environnement	*cpy;
 	t_environnement	*tmp;
+	t_environnement	*copy;
 
-	cpy = *env;
-	tmp = cpy;
-	while (cpy)
+	copy = *env;
+	tmp = copy;
+	while (copy)
 	{
-		tmp = cpy;
-		cpy = cpy->next;
+		tmp = copy;
+		copy = copy->next;
 		free(tmp->str);
 		free(tmp);
 	}
