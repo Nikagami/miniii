@@ -35,11 +35,11 @@ int	is_env(char *str, char *env, int len)
 	return (-1);
 }
 
-char	*doll_alloc(int *cur)
+char	*doll_alloc(int *current)
 {
 	char	*new;
 
-	*cur = *cur + 1;
+	*current = *current + 1;
 	new = malloc(sizeof(char) * 2);
 	if (new)
 	{
@@ -50,7 +50,7 @@ char	*doll_alloc(int *cur)
 	return (NULL);
 }
 
-char	*get_envmtp(char *str, int *cur)
+char	*get_envmtp(char *str, int *current)
 {
 	int		len_str;
 	char	*cpy;
@@ -59,10 +59,10 @@ char	*get_envmtp(char *str, int *cur)
 	cpy = NULL;
 	len_str = access_env_var_len(str);
 	if (len_str == 0)
-		return (doll_alloc(cur));
+		return (doll_alloc(current));
 	if (len_str == 1 && str[1] == '?')
 	{
-		*cur = *cur + 2;
+		*current = *current + 2;
 		return (ft_itoa(g_exit_code));
 	}
 	cpy = malloc(sizeof(char) * (len_str + 1));
@@ -72,16 +72,16 @@ char	*get_envmtp(char *str, int *cur)
 	env = lookup_env(cpy);
 	free(cpy);
 	if (env == NULL)
-		return (create_fake_env(cur, len_str));
-	*cur = *cur + len_str + 1;
+		return (create_fake_env(current, len_str));
+	*current = *current + len_str + 1;
 	cpy = ft_strdup(env);
 	return (cpy);
 }
 
-char	*lookup_env_var(int *cur, char *str)
+char	*lookup_env_var(int *current, char *str)
 {
 	char	*s3;
 
-	s3 = get_envmtp(str + *cur, cur);
+	s3 = get_envmtp(str + *current, current);
 	return (s3);
 }

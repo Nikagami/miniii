@@ -45,7 +45,7 @@ void	handle_cmd_signal(int sig)
 	}
 	if (sig == SIGQUIT)
 	{
-		write(2, "Quit (core dumped)\n", ft_strlen("Quit (core dumped)\n"));
+		write(2, "Quit\n", ft_strlen("Quit\n"));
 		exit (1);
 	}
 }

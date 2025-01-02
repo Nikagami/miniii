@@ -38,7 +38,7 @@ static int	create_and_fill_cmd(char *str, int cur, int start,
 	if (new->command_strings == NULL)
 		return (free_cmd_and_ret_err(new));
 	new->command_strings = ft_strncpy(new->command_strings, str + start, cur - start);
-	add_to_tail(first, new);
+	lst_add_back(first, new);
 	return (0);
 }
 

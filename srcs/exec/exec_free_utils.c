@@ -30,11 +30,12 @@ void	cleanup_all_and_exit(t_commande_line **cmd,
 	exit(1);
 }
 
-void	rm_and_free_file(char *file_name)
+void	rm_and_free_file(char **file_name)
 {
-	if (file_name != NULL)
+	if (file_name && *file_name && **file_name)
 	{
-		unlink(file_name);
-		free(file_name);
+		unlink(*file_name);
+		free(*file_name);
+		*file_name = NULL;
 	}
 }

@@ -10,7 +10,7 @@ static char	*process_non_env(char *s, char *s1, int *current)
 	start = *current;
 	while (s[*current] && s[*current] != '$')
 		(*current)++;
-	new = malloc(sizeof(char) * ((*current) - start));
+	new = malloc(sizeof(char) * ((*current) - start) + 1);
 	if (new == NULL)
 		return (free_and_nullify(s1));
 	new = ft_strncpy(new, s + start, ((*current) - start));
@@ -101,6 +101,7 @@ int	setup_heredoc_fd(t_commande_line **c_list, t_token **current)
 		fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
 	}
 	write_in_fd(fd, (*current)->token_value, (*current)->expanded);
+	close(fd);
 	fd = open(file_name, O_RDONLY);
 	(*c_list)->input_fd = fd;
 	if ((*c_list)->file_name != NULL)

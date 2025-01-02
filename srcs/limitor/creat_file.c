@@ -16,6 +16,7 @@ int	aleatori_char(void)
 		n++;
 	if (n < 0)
 		n = n * (-1);
+	close(fd);
 	return ('a' + n % 26);
 }
 

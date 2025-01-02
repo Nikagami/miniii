@@ -80,19 +80,19 @@ static char	*if_env(t_token **stc, char *str, char *s1, int *i)
 	return (new_token_env(stc, split, 1));
 }
 
-char	*process_unquoted_word(t_token **stc, char *str, int *cur, char *s1)
+char	*process_unquoted_word(t_token **stc, char *str, int *current, char *s1)
 {
-	while (str[*cur] && str[*cur] != '\'' && str[*cur] != '"')
+	while (str[*current] && str[*current] != '\'' && str[*current] != '"')
 	{
-		if (str[*cur] != '$')
+		if (str[*current] != '$')
 		{
-			s1 = if_no_env(str, cur, s1);
+			s1 = if_no_env(str, current, s1);
 			if (s1 == NULL)
 				return (NULL);
 		}
-		else if (str[*cur] && str[*cur] == '$')
+		else if (str[*current] && str[*current] == '$')
 		{
-			s1 = if_env(stc, str, s1, cur);
+			s1 = if_env(stc, str, s1, current);
 			if (s1 == NULL)
 			{
 				return (NULL);

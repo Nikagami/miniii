@@ -1,28 +1,28 @@
 
 #include "minishell.h"
 
-char	*handle_env_var(char *str, char *tmp, int *cur)
+char	*handle_env_var(char *str, char *tmp, int *current)
 {
 	char	*tmp2;
 
 	tmp2 = NULL;
-	tmp2 = lookup_env_var(cur, str);
+	tmp2 = lookup_env_var(current, str);
 	if (tmp2 == NULL)
 		return (free_and_nullify(tmp));
 	return (tmp2);
 }
 
-char	*extract_before_env(char *str, char *s1, int *cur, int start)
+char	*extract_before_env(char *str, char *s1, int *current, int start)
 {
 	char	*s2;
 	char	*s3;
 
 	s2 = NULL;
 	s3 = NULL;
-	s2 = malloc(sizeof(char) * ((*cur) - start + 1));
+	s2 = malloc(sizeof(char) * ((*current) - start + 1));
 	if (s2 == NULL)
 		return (free_and_nullify(s1));
-	s2 = ft_strncpy(s2, str + start, (*cur) - start);
+	s2 = ft_strncpy(s2, str + start, (*current) - start);
 	s3 = ft_strjoin(s1, s2);
 	free_strings(s1, s2);
 	return (s3);

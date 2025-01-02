@@ -3,8 +3,8 @@
 
 int	file_error_message(t_commande_line *cur_b)
 {
-	write(2, "minishell: erreur de syntaxe",
-		ft_strlen("minishell: erreur de syntaxe"));
+	write(2, "minishell: syntax error",
+		ft_strlen("minishell: syntax error"));
 	if (cur_b)
 		write(2, " |\n", 3);
 	else

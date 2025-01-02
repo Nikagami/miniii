@@ -19,9 +19,7 @@ int	ft_exec_cmd(t_commande_line **c_list, t_commande_line **head,
 	execve((*c_list)->argv[0], (*c_list)->argv, s);
 	if (stat((*c_list)->argv[0], &buf) == 0)
 	{
-		write(2, "minishell: ", ft_strlen("minishell: "));
-		write(2, (*c_list)->argv[0], ft_strlen((*c_list)->argv[0]));
-		write(2, ": Permission denied\n", ft_strlen(": Permission denied\n"));
+		write_all_consecutif("minishell: ", (*c_list)->argv[0], ": Permission denied\n");
 		exit(126);
 	}
 	free_all_cmds(head);
@@ -52,7 +50,8 @@ int	ft_execve_fct(t_commande_line **c_list, t_commande_line **head, pid_t *pid)
 	}
 	if ((*c_list)->argv[0] == NULL)
 		free_resources_and_exit(s, head);
-	rm_and_free_file((*c_list)->file_name);
+	rm_and_free_file(&(*c_list)->file_name);
+	//(*c_list)->file_name = NULL;
 	if ((*c_list)->input_fd < 0 || (*c_list)->output_fd < 0)
 		cleanup_all_and_exit(head, pid, s);
 	if (check_builtin((*c_list)->argv[0]))

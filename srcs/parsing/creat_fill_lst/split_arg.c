@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-static int	create_add_back_token(int cur, int start, char *str,
+static int	create_add_back_token(int current, int start, char *str,
 		t_commande_line **stc)
 {
 	t_token	*new;
@@ -10,41 +10,39 @@ static int	create_add_back_token(int cur, int start, char *str,
 	if (new == NULL)
 		return (50);
 	reset_token(new);
-	new->token_value = malloc(sizeof(char *) * (cur - start + 1));
+	new->token_value = malloc(sizeof(char *) * (current - start + 1));
 	if (new->token_value == NULL)
 		return (clean_token_and_rep_err(new));
-	new->token_value = ft_strncpy(new->token_value, str + start, cur - start);
+	new->token_value = ft_strncpy(new->token_value, str + start, current - start);
 	set_token_type(new);
 	add_token_to_tail(&((*stc)->first_token), new);
 	return (0);
 }
 
-static void	iter_to_end_or_redirection(char	*str, int *cur)
+static void	iter_to_end_or_redirection(char	*str, int *current)
 {
 	char	c;
 
-	c = str[*cur];
-	while (str[*cur] && str[*cur] == c)
-		(*cur)++;
+	c = str[*current];
+	while (str[*current] && str[*current] == c)
+		(*current)++;
 }
 
-int	iter_to_end_arg(int *cur, char *str)
+int	iter_to_end_arg(int *current, char *str)
 {
 	t_quote_state	quote;
 
 	quote = QUOTE_NONE;
-	while (str[(*cur)])
+	while (str[(*current)])
 	{
-		quote = manage_quote_state(str[*cur], quote);
-		if (is_delimiter(str[*cur]) == 1 && quote == QUOTE_NONE)
+		quote = manage_quote_state(str[*current], quote);
+		if (is_delimiter(str[*current]) == 1 && quote == QUOTE_NONE)
 			break ;
-		(*cur)++;
+		(*current)++;
 	}
 	return (0);
 }
 
-/*ici on decoupe la string en arg*/
-/*tester create_add_back_token == NULL*/
 static int	split_string_cur_cmdl(t_commande_line **stc)
 {
 	int		cur;
@@ -72,8 +70,6 @@ static int	split_string_cur_cmdl(t_commande_line **stc)
 	return (0);
 }
 
-/* ici on passe sur chaque commande line et on va les envoyer faire split */
-/*la commande line en different token et stocker le mot dans token->str*/
 int	tokenize_cmd_lines(t_commande_line **first)
 {
 	t_commande_line	*cur;

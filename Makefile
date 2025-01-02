@@ -1,14 +1,12 @@
 NAME = minishell
 
-NAME_B = minishell_bonus
-
 MAC =
 
 MAC_B =
 
 LIBFT = srcs/libft
 
-FLAGS 	= -g -Wall -Wextra
+FLAGS 	= -g3 -Wall -Wextra
 
 LIB =  -L/usr/include -lreadline
 
@@ -68,15 +66,9 @@ SRCS =  	srcs/main_file/main.c											\
 			srcs/limitor/creat_file.c							\
 			srcs/limitor/open_heredoc.c
 
-SRCS_BONUS =
-
-
 CC 		= gcc
 OBJ 	= ${SRCS:.c=.o}
 OBJS 	= *.o
-OBJ_B = ${SRCS_BONUS:.c=.o}
-OBJS_B = *.o
-
 
 all :
 	@make -C $(LIBFT)
@@ -92,28 +84,17 @@ get_src:
 $(NAME)	: $(OBJ)
 	$(CC) $(FLAGS) -I srcs/libft/includes/ -I include/. $(OBJ) srcs/libft/libft.a -o $(NAME) $(LIB)
 
-$(NAME_B) : $(OBJ_B)
-	$(CC) $(FLAGS) -I srcs/libft/includes/ -I include/. $(OBJ_B) srcs/libft/libft.a -o $(NAME_B)
-
 clean :
 		@make clean -C $(LIBFT)
 		@rm -rf $(OBJ)
-		@rm -rf $(OBJ_B)
 
 fclean : clean
 		@rm -rf libft.a
 		@make fclean -C $(LIBFT)
 		@rm -rf $(OBJS)
-		@rm -rf $(OBJS_B)
 		@rm -rf $(NAME)
-		@rm -rf $(NAME_B)
-
-relinux : fclean LINUX
 
 re : fclean all
 
-bonus :
-		@make -C $(LIBFT)
-		@make ${NAME_B}
-
-rebonus : fclean bonus
+valgrind :
+	 make && clear && valgrind --trace-children=yes --suppressions=valgrind_readline_leaks_ignore.txt -s --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell > resultat_valgrind.txt 2>&1 && echo $? || echo $?

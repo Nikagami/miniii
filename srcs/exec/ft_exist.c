@@ -6,19 +6,14 @@ extern int	g_exit_code;
 char	*write_bad_cmd_free_split(char *s, char **path_parts)
 {
 	free_and_cleanup_split(path_parts);
-	write(2, "minishell: ", 11);
-	write(2, s, ft_strlen(s));
-	write(2, " : commande introuvable\n",
-		ft_strlen(" : commande introuvable\n"));
+	write_all_consecutif("minishell: ", s, " command not found\n");
 	return (NULL);
 }
 
 char	*write_bad_cmd_free(char *s)
 {
-	write(2, "minishell: ", 11);
-	write(2, s, ft_strlen(s));
-	write(2, " : commande introuvable\n",
-		ft_strlen(" : commande introuvable\n"));
+
+	write_all_consecutif("minishell: ", s, "command not found\n");
 	free(s);
 	return (NULL);
 }

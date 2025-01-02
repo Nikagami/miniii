@@ -9,7 +9,7 @@ void		set_token_type(t_token *new);
 void		reset_token(t_token *new);
 int			check_builtin(char *str);
 
-void		add_to_tail(t_commande_line **first, t_commande_line *add_back);
+void		lst_add_back(t_commande_line **first, t_commande_line *add_back);
 void		add_token_to_tail(t_token **first, t_token *add_back);
 int			count_cmds(t_commande_line *cmd);
 

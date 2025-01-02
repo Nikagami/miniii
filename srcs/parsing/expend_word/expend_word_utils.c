@@ -1,10 +1,10 @@
 
 #include "minishell.h"
 
-char	*initialize_string(char **str, char *duplica, int *cur, char **s1)
+char	*initialize_string(char **str, char *duplica, int *current, char **s1)
 {
 	*s1 = NULL;
-	*cur = 0;
+	*current = 0;
 	*str = ft_strdup(duplica);
 	free(duplica);
 	if (*str == NULL)
@@ -29,8 +29,8 @@ int	check_file_type(t_token_type type)
 
 int	syntax_error_file(t_token_type type)
 {
-	write(2, "minishell: erreur de syntaxe",
-		ft_strlen("minishell: erreur de syntaxe"));
+	write(2, "minishell: syntax error",
+		ft_strlen("minishell: syntax error"));
 	if (type == TOKEN_NONE)
 		write(2, " newline\n", 9);
 	if (type == TOKEN_CREAT_FILE)

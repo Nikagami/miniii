@@ -31,4 +31,5 @@ void	free_cmd_tokens(t_commande_line **cmd_line);
 int		cleanup_on_malloc_fail(t_commande_line **cmd, char *str);
 void	syntax_error_message(void);
 int		free_all_cmds(t_commande_line **cmd_line);
+
 #endif

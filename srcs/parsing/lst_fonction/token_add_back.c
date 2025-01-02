@@ -3,15 +3,15 @@
 
 void	add_token_to_tail(t_token **first, t_token *add_back)
 {
-	t_token	*cur;
+	t_token	*cursor;
 
-	cur = *first;
-	if (cur == NULL)
+	cursor = *first;
+	if (cursor == NULL)
 		*first = add_back;
 	else
 	{
-		while (cur->next_t)
-			cur = cur->next_t;
-		cur->next_t = add_back;
+		while (cursor->next_t)
+			cursor = cursor->next_t;
+		cursor->next_t = add_back;
 	}
 }

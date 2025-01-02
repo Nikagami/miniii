@@ -26,3 +26,15 @@ char	**env_to_array(t_environnement **envp)
 	}
 	return (env_array);
 }
+
+void	write_all_consecutif(char *s1, char *s2, char *s3)
+{
+	char	*msg;
+	char	*tmp;
+
+	tmp = ft_strjoin(s1, s2);
+	msg = ft_strjoin(tmp, s3);
+	free(tmp);
+	ft_putstr_fd(msg, 2);
+	free(msg);
+}

@@ -31,6 +31,7 @@ int		initialize_pipes(t_commande_line **cmdl);
 void	cleanup_fds(t_commande_line **cmdl);
 int		handle_redirections(t_commande_line **cmdl);
 char	**env_to_array(t_environnement **envp);
+void	write_all_consecutif(char *s1, char *s2, char *s3);
 
 int		setup_heredoc_fd(t_commande_line **cmdl, t_token **cur);
 char	*random_name_generator(void);
@@ -41,7 +42,7 @@ void	free_resources_and_exit(char **str,
 void	exit_on_error(char **str);
 void	cleanup_all_and_exit(t_commande_line **cmd,
 			pid_t *pid, char **str);
-void	rm_and_free_file(char *file_name);
+void	rm_and_free_file(char **file_name);
 
 int		wait_for_process(t_commande_line **cmdl, pid_t *pid);
 int		run_without_fork(t_commande_line **cmdl, pid_t *pid);

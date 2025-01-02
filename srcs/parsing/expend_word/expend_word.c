@@ -4,24 +4,24 @@
 int	word_modif_two(t_token **stc, char *duplica, t_quote_state quote, t_quote_state prec)
 {
 	char	*s1;
-	int		cur;
+	int		current;
 	char	*str;
 
-	if (initialize_string(&str, duplica, &cur, &s1) == NULL)
+	if (initialize_string(&str, duplica, &current, &s1) == NULL)
 		return (50);
-	while (str[cur])
+	while (str[current])
 	{
-		quote = manage_quote_state(str[cur], quote);
+		quote = manage_quote_state(str[current], quote);
 		if (prec != quote)
-			prec = complete_quote_update(*stc, &cur, quote, &s1);
+			prec = complete_quote_update(*stc, &current, quote, &s1);
 		else
 		{
 			if (quote == QUOTE_SINGLE)
-				s1 = process_single_quoted_word(str, &cur, s1);
+				s1 = process_single_quoted_word(str, &current, s1);
 			else if (quote == QUOTE_DOUBLE)
-				s1 = process_double_quoted_word(str, &cur, s1);
+				s1 = process_double_quoted_word(str, &current, s1);
 			else if (quote == QUOTE_NONE)
-				s1 = process_unquoted_word(stc, str, &cur, s1);
+				s1 = process_unquoted_word(stc, str, &current, s1);
 		}
 		if (s1 == NULL)
 			return (free_array_and_ret_err(str));
@@ -43,13 +43,13 @@ int	word_modif(t_token **stc, char *str, t_token_type token)
 
 int	edit_type(t_commande_line **block, int limiter)
 {
-	t_commande_line	*cur_b;
+	t_commande_line	*cursor_b;
 	t_token			*cur_t;
 
-	cur_b = *block;
-	while (cur_b)
+	cursor_b = *block;
+	while (cursor_b)
 	{
-		cur_t = cur_b->first_token;
+		cur_t = cursor_b->first_token;
 		while (cur_t)
 		{
 			if (cur_t->token_type == TOKEN_HERE_DOC)
@@ -65,23 +65,23 @@ int	edit_type(t_commande_line **block, int limiter)
 		}
 		if (limiter == 1)
 			return (syntax_error_file(TOKEN_NONE));
-		cur_b = cur_b->next_cmd;
+		cursor_b = cursor_b->next_cmd;
 	}
 	return (0);
 }
 
 int	check_open_fil(t_commande_line **block)
 {
-	t_commande_line	*cur_b;
+	t_commande_line	*cursor_b;
 	t_token			*cur_t;
 	int				file;
 	t_token_type		type;
 
-	cur_b = *block;
+	cursor_b = *block;
 	file = 0;
-	while (cur_b)
+	while (cursor_b)
 	{
-		cur_t = cur_b->first_token;
+		cur_t = cursor_b->first_token;
 		while (cur_t)
 		{
 			if (check_file_type(cur_t->token_type) == 1 && file == 1)
@@ -93,25 +93,25 @@ int	check_open_fil(t_commande_line **block)
 			cur_t = cur_t->next_t;
 		}
 		if (file == 1)
-			return (file_error_message(cur_b->next_cmd));
-		cur_b = cur_b->next_cmd;
+			return (file_error_message(cursor_b->next_cmd));
+		cursor_b = cursor_b->next_cmd;
 	}
 	return (0);
 }
 
 int	handle_words_expand(t_commande_line **block)
 {
-	t_commande_line	*cur_b;
+	t_commande_line	*cursor_b;
 	t_token			*cur_t;
 	int				res;
 
-	cur_b = *block;
+	cursor_b = *block;
 	if (edit_type(block, 0) != 0 || check_open_fil(block) != 0)
 		return (12);
 	res = 0;
-	while (cur_b)
+	while (cursor_b)
 	{
-		cur_t = cur_b->first_token;
+		cur_t = cursor_b->first_token;
 		while (cur_t)
 		{
 			if (cur_t->token_value && cur_t->token_value[0] != '\0')
@@ -122,7 +122,7 @@ int	handle_words_expand(t_commande_line **block)
 			}
 			cur_t = cur_t->next_t;
 		}
-		cur_b = cur_b->next_cmd;
+		cursor_b = cursor_b->next_cmd;
 	}
 	return (0);
 }

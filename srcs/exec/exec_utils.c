@@ -22,7 +22,11 @@ int	wait_for_process(t_commande_line **c_list, pid_t *pid)
 		if (WIFEXITED(g_exit_code))
 			g_exit_code = WEXITSTATUS(g_exit_code);
 		else if (WIFSIGNALED(g_exit_code))
+		{
 			g_exit_code = 128 + WTERMSIG(g_exit_code);
+			if(g_exit_code == 131)
+				write(2, "Quit\n", ft_strlen("Quit\n"));
+		}
 		i++;
 	}
 	return (0);

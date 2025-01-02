@@ -1,17 +1,17 @@
 
 #include "minishell.h"
 
-void	add_to_tail(t_commande_line **first, t_commande_line *add_back)
+void	lst_add_back(t_commande_line **first, t_commande_line *add_back)
 {
-	t_commande_line	*cur;
+	t_commande_line	*cursor;
 
-	cur = *first;
-	if (cur == NULL)
+	cursor = *first;
+	if (cursor == NULL)
 		*first = add_back;
 	else
 	{
-		while (cur->next_cmd)
-			cur = cur->next_cmd;
-		cur->next_cmd = add_back;
+		while (cursor->next_cmd)
+			cursor = cursor->next_cmd;
+		cursor->next_cmd = add_back;
 	}
 }
