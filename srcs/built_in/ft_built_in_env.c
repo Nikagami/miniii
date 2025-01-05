@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_built_in_env.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:17:35 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:31:35 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 int	process_env(char **s)
 {
-	t_environnement	**env;
+	t_env	**env;
 
 	if (*s == NULL)
 		return (0);
@@ -26,9 +37,9 @@ int	check_equal(char *s)
 	return (0);
 }
 
-void	display_env(t_environnement **env)
+void	display_env(t_env **env)
 {
-	t_environnement	*current;
+	t_env	*current;
 
 	current = *env;
 	while (current)

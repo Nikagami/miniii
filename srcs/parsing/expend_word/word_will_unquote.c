@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   word_will_unquote.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:29:58 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 10:42:31 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -21,8 +32,8 @@ char	*new_token_env(t_token **stc, char **split, int i)
 			return (cleanup_split_and_ret_str(split, NULL));
 		reset_token(new);
 		new->token_type = TOKEN_ARG;
-		new->token_value = ft_strdup(split[i]);
-		if (new->token_value == NULL)
+		new->t_value = ft_strdup(split[i]);
+		if (new->t_value == NULL)
 			if (new)
 				return (free_and_cleanup_split_token(split, new));
 		if ((*stc))
@@ -32,7 +43,7 @@ char	*new_token_env(t_token **stc, char **split, int i)
 		i++;
 	}
 	free_and_cleanup_split(split);
-	return (new->token_value);
+	return (new->t_value);
 }
 
 static char	*if_no_env(char *str, int *i, char *s1)
@@ -76,7 +87,7 @@ static char	*if_env(t_token **stc, char *str, char *s1, int *i)
 	free(s1);
 	if (split[0] == NULL || split[1] == NULL)
 		return (cleanup_split_and_ret_str(split, join));
-	(*stc)->token_value = join;
+	(*stc)->t_value = join;
 	return (new_token_env(stc, split, 1));
 }
 

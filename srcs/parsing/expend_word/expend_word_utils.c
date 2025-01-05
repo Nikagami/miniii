@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expend_word_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:30 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:38:04 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -15,11 +26,11 @@ char	*initialize_string(char **str, char *duplica, int *current, char **s1)
 int	update_token_string(char *str, t_token **stc, char *s1)
 {
 	free(str);
-	(*stc)->token_value = s1;
+	(*stc)->t_value = s1;
 	return (0);
 }
 
-int	check_file_type(t_token_type type)
+int	check_file_type(t_token_t type)
 {
 	if (type == TOKEN_CREAT_FILE || type == TOKEN_WRITE_FILE
 		|| type == TOKEN_OPEN_FILE || type == TOKEN_HERE_DOC)
@@ -27,7 +38,7 @@ int	check_file_type(t_token_type type)
 	return (0);
 }
 
-int	syntax_error_file(t_token_type type)
+int	syntax_error_file(t_token_t type)
 {
 	write(2, "minishell: syntax error",
 		ft_strlen("minishell: syntax error"));
@@ -44,7 +55,7 @@ int	syntax_error_file(t_token_type type)
 	return (12);
 }
 
-t_token_type	change_file_type(t_token_type type, int *file)
+t_token_t	change_file_type(t_token_t type, int *file)
 {
 	*file = 1;
 	return (type);

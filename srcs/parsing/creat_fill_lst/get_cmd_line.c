@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_cmd_line.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:58 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 10:37:23 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -12,7 +23,7 @@ static void	init_cmdl(t_commande_line *new)
 
 static void	go_to_the_pipe(int *i, char *str)
 {
-	t_quote_state	quote;
+	t_quote	quote;
 
 	quote = QUOTE_NONE;
 	while (str[*i])
@@ -37,7 +48,8 @@ static int	create_and_fill_cmd(char *str, int cur, int start,
 	new->command_strings = malloc(sizeof(char) * (cur - start + 1));
 	if (new->command_strings == NULL)
 		return (free_cmd_and_ret_err(new));
-	new->command_strings = ft_strncpy(new->command_strings, str + start, cur - start);
+	new->command_strings = ft_strncpy(new->command_strings, \
+		str + start, cur - start);
 	lst_add_back(first, new);
 	return (0);
 }

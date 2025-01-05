@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_add_value.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:17:55 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:34:03 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	env_add(char *s)
@@ -42,10 +54,10 @@ int	ft_special_lenkey(char *s)
 	return (i);
 }
 
-int	new_env_value(t_environnement **env_list, char *env, int declare)
+int	new_env_value(t_env **env_list, char *env, int declare)
 {
 	int		len;
-	t_environnement	*copy;
+	t_env	*copy;
 
 	copy = *env_list;
 	len = ft_special_lenkey(env);

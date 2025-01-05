@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exist.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:15:52 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:26:09 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -12,7 +23,6 @@ char	*write_bad_cmd_free_split(char *s, char **path_parts)
 
 char	*write_bad_cmd_free(char *s)
 {
-
 	write_all_consecutif("minishell: ", s, "command not found\n");
 	free(s);
 	return (NULL);

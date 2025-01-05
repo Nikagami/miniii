@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_arg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:47 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:37:30 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -10,11 +21,12 @@ static int	create_add_back_token(int current, int start, char *str,
 	if (new == NULL)
 		return (50);
 	reset_token(new);
-	new->token_value = malloc(sizeof(char *) * (current - start + 1));
-	if (new->token_value == NULL)
+	new->t_value = malloc(sizeof(char *) * (current - start + 1));
+	if (new->t_value == NULL)
 		return (clean_token_and_rep_err(new));
-	new->token_value = ft_strncpy(new->token_value, str + start, current - start);
-	set_token_type(new);
+	new->t_value = ft_strncpy(new->t_value, \
+		str + start, current - start);
+	set_token_t(new);
 	add_token_to_tail(&((*stc)->first_token), new);
 	return (0);
 }
@@ -30,7 +42,7 @@ static void	iter_to_end_or_redirection(char	*str, int *current)
 
 int	iter_to_end_arg(int *current, char *str)
 {
-	t_quote_state	quote;
+	t_quote	quote;
 
 	quote = QUOTE_NONE;
 	while (str[(*current)])
@@ -58,7 +70,8 @@ static int	split_string_cur_cmdl(t_commande_line **stc)
 		while (cur < len && (*stc)->command_strings[cur] == ' ')
 			cur++;
 		start = cur;
-		if ((*stc)->command_strings[cur] && is_redir((*stc)->command_strings[cur]))
+		if ((*stc)->command_strings[cur] && \
+			is_redir((*stc)->command_strings[cur]))
 			iter_to_end_or_redirection((*stc)->command_strings, &cur);
 		else
 		{

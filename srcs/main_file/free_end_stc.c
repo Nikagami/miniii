@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_end_stc.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:31:17 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 10:42:31 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -10,8 +21,8 @@ void	free_cmd_tokens(t_commande_line **cmd_line)
 	while ((*cmd_line)->first_token)
 	{
 		tok = (*cmd_line)->first_token->next_t;
-		if ((*cmd_line)->first_token->token_value)
-			free((*cmd_line)->first_token->token_value);
+		if ((*cmd_line)->first_token->t_value)
+			free((*cmd_line)->first_token->t_value);
 		free((*cmd_line)->first_token);
 		(*cmd_line)->first_token = tok;
 	}

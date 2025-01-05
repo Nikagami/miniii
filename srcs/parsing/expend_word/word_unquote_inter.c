@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   word_unquote_inter.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:14 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 10:42:31 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -51,8 +62,8 @@ char	*free_and_cleanup_split_token(char **split, t_token *tok)
 	free_and_cleanup_split(split);
 	if (tok)
 	{
-		if (tok->token_value)
-			free(tok->token_value);
+		if (tok->t_value)
+			free(tok->t_value);
 	}
 	return (NULL);
 }

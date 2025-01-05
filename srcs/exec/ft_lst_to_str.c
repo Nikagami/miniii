@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lst_to_str.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:15:47 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:32:15 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 int	env_len(void)
 {
-	t_environnement	*env;
+	t_env	*env;
 	int		i;
 
 	i = 1;
@@ -16,10 +27,10 @@ int	env_len(void)
 	return (i);
 }
 
-char	**envlist_to_array(t_environnement **envp)
+char	**envlist_to_array(t_env **envp)
 {
 	char	**s;
-	t_environnement	*env;
+	t_env	*env;
 	int		i;
 	int		env_index;
 

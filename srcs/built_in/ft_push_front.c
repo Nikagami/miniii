@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_push_front.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:16:22 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:31:35 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-int	add_env_front(char *env, t_environnement **begin_lst, int declare)
+int	add_env_front(char *env, t_env **begin_lst, int declare)
 {
-	t_environnement	*new_env_entry;
+	t_env	*new_env_entry;
 
-	new_env_entry = malloc(sizeof(t_environnement));
+	new_env_entry = malloc(sizeof(t_env));
 	if (new_env_entry == NULL)
 		return (50);
 	new_env_entry->str = rm_plus(env);

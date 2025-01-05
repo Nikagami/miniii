@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_built_in_export_fd.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:17:30 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:33:26 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -28,9 +39,9 @@ int	ft_export_fd(char **s, int fd)
 	return (0);
 }
 
-void	ft_show_export_fd(t_environnement **env, int fd)
+void	ft_show_export_fd(t_env **env, int fd)
 {
-	t_environnement	*current;
+	t_env	*current;
 	int		len;
 
 	current = *env;
@@ -56,7 +67,7 @@ void	ft_show_export_fd(t_environnement **env, int fd)
 
 void	display_export_fd(int fd)
 {
-	t_environnement	**env;
+	t_env	**env;
 
 	env = access_env();
 	ft_show_export_fd(env, fd);

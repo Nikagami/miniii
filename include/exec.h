@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:18:49 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:42:15 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
@@ -15,12 +26,7 @@ char	*get_executable_path(char *str, char *path, int i);
 /*                        FILE = exec/ft_lst_to_str.c                         */
 /* -------------------------------------------------------------------------- */
 int		env_len(void);
-char	**envlist_to_array(t_environnement **envp);
-
-/* -------------------------------------------------------------------------- */
-/*                           FILE = exec/fill_fd.c                            */
-/* -------------------------------------------------------------------------- */
-int		set_fd(t_commande_line **stc);
+char	**envlist_to_array(t_env **envp);
 
 /* -------------------------------------------------------------------------- */
 /*                           FILE = exec/ft_exec.c                            */
@@ -30,7 +36,7 @@ int		run_commands(t_commande_line	**s_cmd_line);
 int		initialize_pipes(t_commande_line **cmdl);
 void	cleanup_fds(t_commande_line **cmdl);
 int		handle_redirections(t_commande_line **cmdl);
-char	**env_to_array(t_environnement **envp);
+char	**env_to_array(t_env **envp);
 void	write_all_consecutif(char *s1, char *s2, char *s3);
 
 int		setup_heredoc_fd(t_commande_line **cmdl, t_token **cur);

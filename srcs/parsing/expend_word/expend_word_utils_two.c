@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expend_word_utils_two.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:35 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:36:05 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -12,7 +23,7 @@ int	file_error_message(t_commande_line *cur_b)
 	return (12);
 }
 
-t_token_type	change_type_file(t_token_type type, int *file)
+t_token_t	change_type_file(t_token_t type, int *file)
 {
 	*file = 0;
 	if (type == TOKEN_OPEN_FILE)

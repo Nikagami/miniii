@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env_singletone.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:16:52 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:31:35 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -11,9 +22,9 @@ int	key_len(char *env)
 	return (i);
 }
 
-int	handle_env_actions(char *str, t_environnement_action mode)
+int	handle_env_actions(char *str, t_env_action mode)
 {
-	t_environnement	**env_list;
+	t_env	**env_list;
 
 	env_list = access_env();
 	if (mode == ENV_DELETE)

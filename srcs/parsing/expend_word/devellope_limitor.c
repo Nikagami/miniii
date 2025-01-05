@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   devellope_limitor.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:40 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 10:42:31 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-int	move_to(char *str, int *i, t_quote_state quote)
+int	move_to(char *str, int *i, t_quote quote)
 {
 	if (quote == QUOTE_NONE)
 	{
@@ -21,7 +32,7 @@ int	move_to(char *str, int *i, t_quote_state quote)
 	return (0);
 }
 
-char	*limitor_unquote(char *str, int *i, char *s1, t_quote_state quote)
+char	*limitor_unquote(char *str, int *i, char *s1, t_quote quote)
 {
 	int		j;
 	char	*s2;
@@ -57,8 +68,8 @@ char	*expand_full_quote_str(void)
 char	*expand_limitor(t_token *stc, char *str, int i)
 {
 	char	*expand_str;
-	t_quote_state	quote;
-	t_quote_state	prec;
+	t_quote	quote;
+	t_quote	prec;
 
 	quote = QUOTE_NONE;
 	prec = QUOTE_NONE;
@@ -67,7 +78,7 @@ char	*expand_limitor(t_token *stc, char *str, int i)
 	{
 		quote = manage_quote_state(str[i], quote);
 		if (prec != quote)
-			prec = complete_quote_update(stc, &i, quote, &expand_str);
+			prec = end_quote_update(stc, &i, quote, &expand_str);
 		else
 		{
 			expand_str = limitor_unquote(str, &i, expand_str, quote);
@@ -90,6 +101,6 @@ int	handle_limitor(t_token *stc, char *str)
 		free(str);
 	if (new == NULL)
 		return (50);
-	stc->token_value = new;
+	stc->t_value = new;
 	return (0);
 }

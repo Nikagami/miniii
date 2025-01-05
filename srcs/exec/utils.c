@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:15:31 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:31:57 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**env_to_array(t_environnement **envp)
+char	**env_to_array(t_env **envp)
 {
 	char	**env_array;
-	t_environnement	*current;
+	t_env	*current;
 	int		i;
 
 	i = 0;

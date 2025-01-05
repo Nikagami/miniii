@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_built_in_export.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:17:23 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:33:40 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -5,7 +16,7 @@ extern int	g_exit_code;
 
 void	display_export(void)
 {
-	t_environnement	**env;
+	t_env	**env;
 
 	env = access_env();
 	view_export(env);
@@ -55,10 +66,10 @@ int	ft_export(char **s)
 	return (0);
 }
 
-void	view_export(t_environnement **env)
+void	view_export(t_env **env)
 {
 	int		len;
-	t_environnement	*current;
+	t_env	*current;
 
 	current = *env;
 	while (current)

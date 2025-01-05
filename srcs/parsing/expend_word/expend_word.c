@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expend_word.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:30:25 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:38:53 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-int	word_modif_two(t_token **stc, char *duplica, t_quote_state quote, t_quote_state prec)
+int	word_modif_two(t_token **stc, char *duplica, t_quote quote, t_quote prec)
 {
 	char	*s1;
 	int		current;
@@ -13,7 +24,7 @@ int	word_modif_two(t_token **stc, char *duplica, t_quote_state quote, t_quote_st
 	{
 		quote = manage_quote_state(str[current], quote);
 		if (prec != quote)
-			prec = complete_quote_update(*stc, &current, quote, &s1);
+			prec = end_quote_update(*stc, &current, quote, &s1);
 		else
 		{
 			if (quote == QUOTE_SINGLE)
@@ -29,10 +40,10 @@ int	word_modif_two(t_token **stc, char *duplica, t_quote_state quote, t_quote_st
 	return (update_token_string(str, stc, s1));
 }
 
-int	word_modif(t_token **stc, char *str, t_token_type token)
+int	word_modif(t_token **stc, char *str, t_token_t token)
 {
-	t_quote_state	quote;
-	t_quote_state	prec;
+	t_quote	quote;
+	t_quote	prec;
 
 	quote = QUOTE_NONE;
 	prec = QUOTE_NONE;
@@ -44,24 +55,24 @@ int	word_modif(t_token **stc, char *str, t_token_type token)
 int	edit_type(t_commande_line **block, int limiter)
 {
 	t_commande_line	*cursor_b;
-	t_token			*cur_t;
+	t_token			*tok;
 
 	cursor_b = *block;
 	while (cursor_b)
 	{
-		cur_t = cursor_b->first_token;
-		while (cur_t)
+		tok = cursor_b->first_token;
+		while (tok)
 		{
-			if (cur_t->token_type == TOKEN_HERE_DOC)
+			if (tok->token_type == TOKEN_HERE_DOC)
 				limiter = 1;
-			else if (limiter == 1 && cur_t->token_value && cur_t->token_value[0] != '\0')
+			else if (limiter == 1 && tok->t_value && tok->t_value[0] != '\0')
 			{
-				if (check_file_type(cur_t->token_type) == 1)
-					return (syntax_error_file(cur_t->token_type));
-				cur_t->token_type = TOKEN_LIMITOR;
+				if (check_file_type(tok->token_type) == 1)
+					return (syntax_error_file(tok->token_type));
+				tok->token_type = TOKEN_LIMITOR;
 				limiter = 0;
 			}
-			cur_t = cur_t->next_t;
+			tok = tok->next_t;
 		}
 		if (limiter == 1)
 			return (syntax_error_file(TOKEN_NONE));
@@ -75,7 +86,7 @@ int	check_open_fil(t_commande_line **block)
 	t_commande_line	*cursor_b;
 	t_token			*cur_t;
 	int				file;
-	t_token_type		type;
+	t_token_t		type;
 
 	cursor_b = *block;
 	file = 0;
@@ -88,7 +99,7 @@ int	check_open_fil(t_commande_line **block)
 				return (syntax_error_file(cur_t->token_type));
 			else if (check_file_type(cur_t->token_type) == 1)
 				type = change_file_type(cur_t->token_type, &file);
-			else if (file == 1 && cur_t->token_value && (cur_t->token_value[0] != '\0'))
+			else if (file == 1 && cur_t->t_value && (cur_t->t_value[0] != '\0'))
 				cur_t->token_type = change_type_file(type, &file);
 			cur_t = cur_t->next_t;
 		}
@@ -114,9 +125,9 @@ int	handle_words_expand(t_commande_line **block)
 		cur_t = cursor_b->first_token;
 		while (cur_t)
 		{
-			if (cur_t->token_value && cur_t->token_value[0] != '\0')
+			if (cur_t->t_value && cur_t->t_value[0] != '\0')
 			{
-				res = word_modif(&cur_t, cur_t->token_value, cur_t->token_type);
+				res = word_modif(&cur_t, cur_t->t_value, cur_t->token_type);
 				if (res != 0)
 					return (50);
 			}

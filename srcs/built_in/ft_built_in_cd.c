@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_built_in_cd.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:17:52 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:33:51 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 extern int	g_exit_code;
@@ -19,7 +31,7 @@ int	has_equal(char *s)
 char	*ft_get_home(void)
 {
 	int		len;
-	t_environnement	*copy;
+	t_env	*copy;
 
 	len = key_len("HOME=");
 	copy = *access_env();

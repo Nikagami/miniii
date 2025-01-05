@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 10:28:41 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 10:36:50 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -15,7 +26,7 @@ int	is_redir(char c)
 	return (0);
 }
 
-t_quote_state	manage_quote_state(char c, t_quote_state quote)
+t_quote	manage_quote_state(char c, t_quote quote)
 {
 	if (c == '"')
 	{
@@ -34,7 +45,7 @@ t_quote_state	manage_quote_state(char c, t_quote_state quote)
 	return (quote);
 }
 
-t_quote_state	complete_quote_update(t_token *stc, int *i, t_quote_state quote, char **s1)
+t_quote	end_quote_update(t_token *stc, int *i, t_quote quote, char **s1)
 {
 	(*i)++;
 	stc->expanded = true;
@@ -50,7 +61,7 @@ t_quote_state	complete_quote_update(t_token *stc, int *i, t_quote_state quote, c
 int	quote_not_pair(char	*str)
 {
 	int		i;
-	t_quote_state	quote;
+	t_quote	quote;
 
 	i = 0;
 	quote = QUOTE_NONE;

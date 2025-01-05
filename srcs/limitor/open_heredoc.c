@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   open_heredoc.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:15:11 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:25:28 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -100,7 +111,7 @@ int	setup_heredoc_fd(t_commande_line **c_list, t_token **current)
 		file_name = random_name_generator();
 		fd = open(file_name, O_CREAT | O_EXCL | O_RDWR, 0644);
 	}
-	write_in_fd(fd, (*current)->token_value, (*current)->expanded);
+	write_in_fd(fd, (*current)->t_value, (*current)->expanded);
 	close(fd);
 	fd = open(file_name, O_RDONLY);
 	(*c_list)->input_fd = fd;

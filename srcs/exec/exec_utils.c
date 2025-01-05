@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/05 11:16:03 by trgaspar          #+#    #+#             */
+/*   Updated: 2025/01/05 11:25:21 by trgaspar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -24,7 +35,7 @@ int	wait_for_process(t_commande_line **c_list, pid_t *pid)
 		else if (WIFSIGNALED(g_exit_code))
 		{
 			g_exit_code = 128 + WTERMSIG(g_exit_code);
-			if(g_exit_code == 131)
+			if (g_exit_code == 131)
 				write(2, "Quit\n", ft_strlen("Quit\n"));
 		}
 		i++;
