@@ -6,19 +6,13 @@
 /*   By: trgaspar <trgaspar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 11:15:57 by trgaspar          #+#    #+#             */
-/*   Updated: 2025/01/05 11:26:14 by trgaspar         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:39:13 by trgaspar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/types.h>
 #include <sys/stat.h>
-
-int	exit_bltin(char **args);
-
-int	ft_non_int(char *str);
-
-int	ft_sup_int(char *str);
 
 extern int	g_exit_code;
 
